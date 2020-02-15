@@ -8,6 +8,7 @@
     "start": "webpack-dev-server --watch --open"
   },
   "dependencies": {
+    "axios": "^0.19.2",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-hook-form": "^4.9.3",
