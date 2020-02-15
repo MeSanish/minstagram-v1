@@ -19,5 +19,12 @@ export default {
   },
   resource: {
     staticPath: process.env.FILE_PATH
+  },
+  auth: {
+    saltRounds: process.env.SALT_ROUNDS || '20',
+    accessTokenDuration: process.env.ACCESS_TOKEN_DURATION || '30m',
+    refreshTokenDuration: process.env.REFRESH_TOKEN_DURATION,
+    accessTokenSecretKey: process.env.ACCESS_TOKEN_SECRET_KEY || 'abc123',
+    refreshTokenSecretKey: process.env.REFRESH_TOKEN_SECRET_KEY || 'abc123',
   }
 }
