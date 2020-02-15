@@ -26,5 +26,6 @@ export default {
     refreshTokenDuration: process.env.REFRESH_TOKEN_DURATION,
     accessTokenSecretKey: process.env.ACCESS_TOKEN_SECRET_KEY || 'abc123',
     refreshTokenSecretKey: process.env.REFRESH_TOKEN_SECRET_KEY || 'abc123',
-  }
+  },
+  allowedOrigin: process.env.ALLOWED_ORIGIN
 }

@@ -7,10 +7,25 @@ import userRouter from './router/users';
 import { errorHandler } from './middleware/error';
 import verification from './middleware/verification';
 import PostRouter from './router/posts';
+import config from './config';
 
 const app = express();
 
 app.set('port', 3000);
+
+// CORS
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", config.allowedOrigin);
+  res.header(
+    "Access-Control-Allow-Methods",
+    "POST, GET, OPTIONS, PUT, DELETE, PATCH"
+  );
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+  );
+  next();
+});
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());

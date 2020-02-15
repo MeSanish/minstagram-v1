@@ -57,6 +57,8 @@ userRouter.post('/authorize', async (req, res, next) => {
       } else {
         throw new Error('You got it wrong bruh')
       }
+    } else {
+      throw new Error('Not found Bruh!')
     }
   } catch (error) {
     next(error)
