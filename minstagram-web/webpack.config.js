@@ -1,5 +1,7 @@
 const path = require("path");
-const HTMLWebpackPlugin = require('html-webpack-plugin');
+const HTMLWebpackPlugin = require("html-webpack-plugin");
+const webpack = require("webpack")
+const dotEnv = require("./env/dot-env");
 
 const PUBLIC_PATH = '/';
 
@@ -13,6 +15,7 @@ module.exports = () => {
       filename: 'main.js',
       path: path.resolve(__dirname, 'build')
     },
+    devtool: 'eval-cheap-source-map',
     devServer: {
       contentBase: path.resolve(__dirname),
       publicPath: PUBLIC_PATH,
@@ -43,6 +46,9 @@ module.exports = () => {
     plugins: [
       new HTMLWebpackPlugin({
         template: './index.html'
+      }),
+      new webpack.DefinePlugin({
+        envConfig: JSON.stringify(dotEnv.getEnvConfig(process.env.NODE_ENV))
       })
     ]
   }
