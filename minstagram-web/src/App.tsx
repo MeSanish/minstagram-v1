@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import AppRouter from './components/Router';
 
 const Title = styled.h1`
   font-size: 1.5em;
@@ -8,13 +9,15 @@ const Title = styled.h1`
 `
 
 const AppSection = styled.section`
-  padding: 4em;
+  width: 100%;
   background: papayawhip;
+  height: 100vh;
 `
 
 const App: React.SFC<{}> = () => (
   <AppSection>
     <Title>Minstagram v1</Title>
+    <AppRouter />
   </AppSection>
 );
 
