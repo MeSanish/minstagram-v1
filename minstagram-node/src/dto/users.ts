@@ -3,6 +3,7 @@ import { IUser } from '../models/user';
 import config from '../config';
 
 interface IProfile {
+  id: string;
   email: string;
   profile: {
     id: string;
@@ -12,8 +13,9 @@ interface IProfile {
 }
 
 export const profileDTO = (user: IUser): IProfile => {
-  const { email, profile, posts } = user;
+  const { email, profile, posts, _id: id } = user;
   return {
+    id,
     email,
     profile: {
       id: profile._id,
