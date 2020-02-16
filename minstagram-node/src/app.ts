@@ -13,6 +13,9 @@ const app = express();
 
 app.set('port', 3000);
 
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
 // CORS
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", config.allowedOrigin);
@@ -24,12 +27,12 @@ app.use(function(req, res, next) {
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type, Accept, Authorization"
   );
-  next();
+  if ('OPTIONS' === req.method) {
+    res.sendStatus(200)
+  } else {
+    next();
+  }
 });
-
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-
 
 app.get('/', (req, res) => {
   res.send('minstagram apis running..')
