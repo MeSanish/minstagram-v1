@@ -9,10 +9,14 @@ const PostRouter = Router();
 
 PostRouter.get('/', async (req, res) => {
   try {
-    const postList = await Post.find().populate(['author', 'imageId'])
+    const postList = await Post.find()
+    .populate('imageId')
+    .populate({ path: 'author', select: 'email', populate: {
+      path: 'profile'
+    }})
     res.json(postListDTO(postList))
   } catch (error) {
-
+    throw error;
   }
 });
 
