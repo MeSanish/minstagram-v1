@@ -22,17 +22,25 @@ PostRouter.get('/', async (req, res) => {
 });
 
 
-PostRouter.post('/', async (req, res) => {
+PostRouter.post('/', async (req: IVerifiedRequest, res, next) => {
   try {
-    const newPost = await Post.create({
-      imageId: req.body.imageId,
-      caption: req.body.caption,
-      author: req.body.authorId
-    })
-    res.json(newPost)
-
+    if(req.auth) {
+      const foundMan = await User.findById(req.auth.userId);
+      if(foundMan) {
+        const newPost = await Post.create({
+          imageId: req.body.imageId,
+          caption: req.body.caption,
+          author: req.auth.userId
+        })
+        res.json(newPost)
+      } else {
+        throw new Error('Can\'t find anyone myan')
+      }
+    } else {
+      throw new Error('No userId bruh!!')
+    }
   } catch (error) {
-
+    next(error)
   }
 });
 

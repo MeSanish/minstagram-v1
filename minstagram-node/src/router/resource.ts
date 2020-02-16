@@ -25,10 +25,10 @@ const upload = multer({ storage: diskStorage }).single('upload')
 const resourceRouter = Router();
 
 resourceRouter.post('/', upload, async (req, res) => {
-  const createdResource = await resource.create({
+  const { _id: id, path } = await resource.create({
     path: req.body.filename
   })
-  res.json(createdResource)
+  res.json({ id, path })
 })
 
 export default resourceRouter
