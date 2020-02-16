@@ -24,6 +24,8 @@ interface IReactionsProps {
   postId: string;
   reaction: IReactionMap;
   onReactionChange: () => void;
+  emojiSize?: string;
+  disabled?: boolean;
 }
 
 const Reactions: React.SFC<IReactionsProps> = (props) => {
@@ -59,7 +61,12 @@ const Reactions: React.SFC<IReactionsProps> = (props) => {
     <ReactionWrapper className="reactions">
       {reactions.map(({ emoji, id }) => (
         <div key={id}>
-          <span style={{ fontSize: '80px', cursor: 'pointer' }} onClick={() => addReaction(id)}>{emoji}</span>
+          <span 
+          style={
+            { fontSize: `${props.emojiSize ? props.emojiSize : '80px'}`, 
+            cursor: `${props.disabled ? 'auto':'pointer'}` }
+            } 
+            onClick={() => !props.disabled && addReaction(id)}>{emoji}</span>
           <span>{props.reaction[id] ? props.reaction[id] : 0}</span>
         </div>
       ))}
