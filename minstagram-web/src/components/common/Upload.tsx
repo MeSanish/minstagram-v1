@@ -2,26 +2,25 @@ import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 import axiosInstance from 'src/utils/axios';
 
-const ImagePreview = styled.img`
-  width: 60px;
-  height: 60px;
-`
-
 const uploadFile = async (uploadFile: FormData) => {
   try {
-    const { id }: { id: string;} = await axiosInstance.post('/v1/upload', {
-      upload: uploadFile
-    }).then(({ data }) => data )
-    .catch((error) => {
-      throw error;
-    })
-    console.log(id);
+    const { id }: { id: string; } = await axiosInstance.post('/v1/upload', uploadFile).then(({ data }) => data)
+      .catch((error) => {
+        throw error;
+      })
+    return id;
   } catch (error) {
     throw error;
   }
 }
 
-const Upload: React.SFC<{}> = () => {
+interface IUploadProps {
+  maxWidth?: number;
+  maxHeight?: number;
+  onUploadComplete: (uploadedId: string) => void;
+}
+
+const Upload: React.SFC<IUploadProps> = (props) => {
   const uploadInput = useRef<HTMLInputElement>(null);
   const [imagePreview, setImagePreview] = useState('');
 
@@ -36,19 +35,26 @@ const Upload: React.SFC<{}> = () => {
     if (files) {
       try {
         const fileToUpload = files.item(0);
-        if(fileToUpload) {
+        if (fileToUpload) {
           const formData = new FormData()
           formData.append('upload', fileToUpload)
-          uploadFile(formData);
+          const resourceId = await uploadFile(formData);
+          props.onUploadComplete(resourceId)
         }
         const filePreview = URL.createObjectURL(fileToUpload);
         setImagePreview(filePreview)
-        
+
       } catch (error) {
-        
+
       }
     }
   }
+  const ImagePreview = styled.img`
+    min-width: 60px;
+    min-height: 60px;
+    max-width: ${props.maxWidth ? `${props.maxWidth}px` : '300px'};
+    max-height: ${props.maxHeight ? `${props.maxHeight}px` : '300px'};
+`
   return (
     <div style={{ textAlign: 'center' }}>
       {imagePreview ? (
