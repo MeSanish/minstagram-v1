@@ -4,6 +4,7 @@ import Post from '../models/post';
 import { postListDTO } from "../dto/post";
 import User from "../models/user";
 import Reaction from "../models/reaction";
+import { IVerifiedRequest } from "../middleware/verification";
 
 const PostRouter = Router();
 
@@ -35,30 +36,34 @@ PostRouter.post('/', async (req, res) => {
   }
 });
 
-PostRouter.patch('/:postId/react', async (req, res, next) => {
+PostRouter.patch('/:postId/react', async (req: IVerifiedRequest, res, next) => {
   try {
-    const newReaction = {
-      reactedBy: req.body.reactorId,
-      reaction: req.body.reactionId
-    }
-    const [postToUpdate, reactor, reactionType] = await Promise.all([
-      Post.findById(req.params.postId), 
-      User.findById(newReaction.reactedBy), 
-      Reaction.findById(newReaction.reaction)])
-    
-    if (postToUpdate && reactor && reactionType) {
-      const filteredReactions = postToUpdate.reactions.filter(
-        ({ reactedBy }) => reactedBy.toString() !== newReaction.reactedBy);
-      const updatedReactions = [
-        ...filteredReactions,
-        newReaction
-      ]
-      const updatedPost = await Post.findByIdAndUpdate(req.params.postId, {
-        reactions: updatedReactions
-      }, { new: true })
-      res.json(updatedPost)
+    if(req.auth) {
+      const newReaction = {
+        reactedBy: req.auth.userId,
+        reaction: req.body.reactionId
+      }
+      const [postToUpdate, reactor, reactionType] = await Promise.all([
+        Post.findById(req.params.postId), 
+        User.findById(newReaction.reactedBy), 
+        Reaction.findById(newReaction.reaction)])
+      
+      if (postToUpdate && reactor && reactionType) {
+        const filteredReactions = postToUpdate.reactions.filter(
+          ({ reactedBy }) => reactedBy.toString() !== newReaction.reactedBy);
+        const updatedReactions = [
+          ...filteredReactions,
+          newReaction
+        ]
+        const updatedPost = await Post.findByIdAndUpdate(req.params.postId, {
+          reactions: updatedReactions
+        }, { new: true })
+        res.json(updatedPost)
+      } else {
+        throw new Error('Params are invalid')
+      }
     } else {
-      throw new Error('Params are invalid')
+      throw new Error('Id is absent')
     }
   } catch (error) {
     next(error)
