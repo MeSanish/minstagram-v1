@@ -4,7 +4,7 @@ import { IUser } from './user';
 
 import { IResource } from './resource';
 
-interface IPostReaction extends Document {
+export interface IPostReaction extends Document {
   reactedBy: string;
   reaction: string
 }
