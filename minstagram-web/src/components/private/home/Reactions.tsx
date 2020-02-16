@@ -20,7 +20,13 @@ const ReactionWrapper = styled.div`
 
 `
 
-const Reactions: React.SFC<{ reaction: IReactionMap }> = (props) => {
+interface IReactionsProps {
+  postId: string;
+  reaction: IReactionMap;
+  onReactionChange: () => void;
+}
+
+const Reactions: React.SFC<IReactionsProps> = (props) => {
   const [reactions, setReactions] = useState<Array<IReactions>>([]);
 
   const fetchReactions = async () => {
@@ -35,6 +41,17 @@ const Reactions: React.SFC<{ reaction: IReactionMap }> = (props) => {
       throw error;
     }
   }
+
+  const addReaction = async (reactionId: string) => {
+    try {
+      await axiosInstance.patch(`/v1/posts/${props.postId}/react`, {
+        reactionId
+      })
+      props.onReactionChange();
+    } catch (error) {
+      throw error;
+    }
+  }
   useEffect(() => {
     fetchReactions();
   }, [])
@@ -42,7 +59,7 @@ const Reactions: React.SFC<{ reaction: IReactionMap }> = (props) => {
     <ReactionWrapper className="reactions">
       {reactions.map(({ emoji, id }) => (
         <div key={id}>
-          <span style={{ fontSize: '80px' }}>{emoji}</span>
+          <span style={{ fontSize: '80px', cursor: 'pointer' }} onClick={() => addReaction(id)}>{emoji}</span>
           <span>{props.reaction[id] ? props.reaction[id] : 0}</span>
         </div>
       ))}

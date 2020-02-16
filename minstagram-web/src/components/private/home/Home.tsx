@@ -23,12 +23,15 @@ const Home = () => {
       throw error;
     }
   }
+  const handleReactionChange = () => {
+    fetchPostList();
+  }
   useEffect(() => {
     fetchPostList();
   }, [])
   return (
     <HomeWrapper className="home">
-      {posts.map((post) => <Post key={post.id} post={post} />)}
+      {posts.map((post) => <Post onReactionChange={handleReactionChange} key={post.id} post={post} />)}
     </HomeWrapper>
   );
 };

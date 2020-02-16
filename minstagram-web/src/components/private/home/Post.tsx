@@ -21,7 +21,12 @@ const ImageWrapper = styled.img`
   max-width: 335px;
 `
 
-const Post: React.SFC<{ post: IPost}> = ({ post }) => {
+interface IPostProps {
+  post: IPost;
+  onReactionChange: () => void;
+}
+
+const Post: React.SFC<IPostProps> = ({ post, onReactionChange }) => {
   return (
     <PostWrapper className="post">
       <div className="image">
@@ -30,7 +35,7 @@ const Post: React.SFC<{ post: IPost}> = ({ post }) => {
       <div className="caption">
         <span>{post.caption}</span>
       </div>
-      <Reactions reaction={post.reactions} />
+      <Reactions onReactionChange={onReactionChange} postId={post.id} reaction={post.reactions} />
     </PostWrapper>
   );
 };
