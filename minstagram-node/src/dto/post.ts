@@ -1,6 +1,5 @@
 import { IPost, IPostReaction } from "../models/post";
 import config from "../config";
-import { profileDTO } from "./users";
 import { IUser } from "../models/user";
 
 interface IPostAuthor {
@@ -43,7 +42,7 @@ export const postListDTO = (postList: Array<IPost>): Array<IPostListItem> => {
   return tranformedPostList;
 }
 
-const createReactionMap = (reactions: Array<IPostReaction>) => {
+export const createReactionMap = (reactions: Array<IPostReaction>) => {
   const reactionMap = new Map<string, number>();
 
   reactions.forEach((reaction) => {

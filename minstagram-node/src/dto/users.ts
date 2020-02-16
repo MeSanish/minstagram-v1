@@ -1,14 +1,13 @@
 import { IUser } from '../models/user';
 
 import config from '../config';
+import { createReactionMap } from './post';
+import { IPost } from '../models/post';
 
 interface IProfile {
   id: string;
   email: string;
-  profile: {
-    id: string;
-    profileUrl: string;
-  };
+  profileUrl: string;
   posts: Array<{}>;
 }
 
@@ -17,10 +16,16 @@ export const profileDTO = (user: IUser): IProfile => {
   return {
     id,
     email,
-    profile: {
-      id: profile._id,
-      profileUrl: `${config.resource.staticPath}/${profile.path}`
-    },
-    posts
+    profileUrl: `${config.resource.staticPath}/${profile.path}`,
+    posts: parsePosts(posts)
   }
+}
+
+const parsePosts = (posts: Array<IPost>) => {
+  return posts.map((post) => ({
+    id: post._id,
+    imageUrl: `${config.resource.staticPath}/${post.imageId.path}`,
+    caption: post.caption,
+    reactions: createReactionMap(post.reactions)
+  }))
 }

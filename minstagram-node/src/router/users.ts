@@ -68,7 +68,9 @@ userRouter.post('/authorize', async (req, res, next) => {
 userRouter.get('/me', verification, async (req: IVerifiedRequest, res, next) => {
   try {
     if (req.auth) {
-      const userFound = await User.findById(req.auth.userId).populate(['profile', 'posts'])
+      const userFound = await User.findById(req.auth.userId)
+      .populate('profile')
+      .populate({ path: 'posts', populate: { path: 'imageId', select: 'path -_id' } })
       if (userFound) {
         res.json(profileDTO(userFound))
       } else {
@@ -82,7 +84,9 @@ userRouter.get('/me', verification, async (req: IVerifiedRequest, res, next) => 
 
 userRouter.get('/:userId', verification, async (req, res, next) => {
   try {
-    const userFound = await User.findById(req.params.userId).populate(['profile', 'posts'])
+    const userFound = await User.findById(req.params.userId)
+    .populate('profile')
+    .populate({ path: 'posts', populate: { path: 'imageId', select: 'path -_id' } })
     if (userFound) {
       res.json(profileDTO(userFound))
     } else {
