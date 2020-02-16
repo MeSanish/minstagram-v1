@@ -13,7 +13,7 @@ axiosInstance.interceptors.request.use(function(config) {
 
   if (storageItem) {
     let session = JSON.parse(storageItem);
-    config.headers['Authorization'] = `Bearer ${session.access_token}`;
+    config.headers['Authorization'] = `Bearer ${session.accessToken}`;
     return config;
   } else {
     return config;
@@ -47,6 +47,7 @@ function parseErrorMessage(error: AxiosResponse<IAxiosErrorData>): IParsedError 
     status: error.status
   };
   if (error.status === 403) {
+    handleLogout();
     parsedError.message = error.data.message;
   } else if (error.status === 400) {
     parsedError.message = error.data.message;
