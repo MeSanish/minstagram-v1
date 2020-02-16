@@ -32,6 +32,8 @@ PostRouter.post('/', async (req: IVerifiedRequest, res, next) => {
           caption: req.body.caption,
           author: req.auth.userId
         })
+        foundMan.posts.push(newPost._id);
+        await foundMan.save();
         res.json(newPost)
       } else {
         throw new Error('Can\'t find anyone myan')
