@@ -5,7 +5,7 @@ import CreatePostForm from './Form';
 const CreatePost = () => {
   return (
     <div>
-      <CreatePostForm onFormChange={() =>{}} />
+      <CreatePostForm />
     </div>
   );
 };
