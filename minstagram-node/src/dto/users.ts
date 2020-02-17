@@ -16,7 +16,7 @@ export const profileDTO = (user: IUser): IProfile => {
   return {
     id,
     email,
-    profileUrl: `${config.resource.staticPath}/${profile.path}`,
+    profileUrl: profile ? `${config.resource.staticPath}/${profile.path}` : '',
     posts: parsePosts(posts)
   }
 }
@@ -42,6 +42,6 @@ export const userListDTO = (user: IUser): IUserListItem => {
   return {
     id,
     email,
-    profileUrl: `${config.resource.staticPath}/${profile.path}`,
+    profileUrl: profile ? `${config.resource.staticPath}/${profile.path}` : '',
   }
 }

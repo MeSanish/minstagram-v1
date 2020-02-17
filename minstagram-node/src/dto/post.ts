@@ -22,7 +22,7 @@ interface IResponseMap {
 const parseAuthor = (user: IUser): IPostAuthor => {
   return {
     email: user.email,
-    profileUrl: `${config.resource.staticPath}/${user.profile.path}`
+    profileUrl: user.profile ? `${config.resource.staticPath}/${user.profile.path}` : ''
   }
 }
 
