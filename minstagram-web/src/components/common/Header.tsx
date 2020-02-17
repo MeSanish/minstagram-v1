@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 import { handleLogout } from 'src/utils/auth';
 import { history } from '../Router';
+import Stalk from './Stalk';
 
 export const ShadowWrapper = styled.div`
   box-shadow: 1px 1px 10px rgba(0,0,0,0.2);
@@ -40,7 +41,7 @@ const Header: React.SFC<{}> = () => {
   return (
     <HeaderWrapper className="header">
       <Link href="/" className="logo" onClick={onHome}>📷</Link>
-      <input className="search" placeholder="Want to stalk" />
+      <Stalk />
       <Link href="/logout" className="logout" onClick={onLogout}>🚪</Link>      
     </HeaderWrapper>
   );
