@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useContext } from 'react';
 import axiosInstance from 'src/utils/axios';
 import styled from 'styled-components';
+import { ReactionsContext } from '../Router';
 
 
 export interface IReactionMap {
   [reactionId: string]: number
 }
 
-interface IReactions {
+export interface IReaction {
   id: string;
   emoji: string;
 }
@@ -29,20 +30,7 @@ interface IReactionsProps {
 }
 
 const Reactions: React.SFC<IReactionsProps> = (props) => {
-  const [reactions, setReactions] = useState<Array<IReactions>>([]);
-
-  const fetchReactions = async () => {
-    try {
-      const reactions: Array<IReactions> = await axiosInstance.get('/v1/reactions')
-        .then(({ data }) => data)
-        .catch((error) => {
-          throw error;
-        })
-      setReactions(reactions);
-    } catch (error) {
-      throw error;
-    }
-  }
+  const { reactions } = useContext(ReactionsContext)
 
   const addReaction = async (reactionId: string) => {
     try {
@@ -54,9 +42,7 @@ const Reactions: React.SFC<IReactionsProps> = (props) => {
       throw error;
     }
   }
-  useEffect(() => {
-    fetchReactions();
-  }, [])
+  
   return (
     <ReactionWrapper className="reactions">
       {reactions.map(({ emoji, id }) => (
