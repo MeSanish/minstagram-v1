@@ -46,7 +46,7 @@ export const createReactionMap = (reactions: Array<IPostReaction>) => {
   const reactionMap = new Map<string, number>();
 
   reactions.forEach((reaction) => {
-    const reactionId = reaction.reaction;
+    const reactionId = reaction.reaction.toString();
     const reactionCount = reactionMap.get(reactionId)
     if(reactionCount) {
       reactionMap.set(reactionId, reactionCount + 1);
@@ -54,6 +54,7 @@ export const createReactionMap = (reactions: Array<IPostReaction>) => {
       reactionMap.set(reactionId, 1);
     }
   });
+
   const responseMap: IResponseMap = {};
 
   for(let [reactionId, reactionCount] of reactionMap) {
