@@ -17,15 +17,17 @@ const FooterWrapper = styled(ShadowWrapper)`
 const Link = styled.a`
   cursor: pointer;
   font-size: 25px;
+  text-decoration: none;
+  color: black;
 `
 
-const Footer = () => {
-  const handleClick = (path: string) => () => history.push(path)
+const Footer: React.SFC<{}> = () => {
+  const handleClick = (path: string) => (event: React.MouseEvent<HTMLAnchorElement>) => { event.preventDefault(); return history.push(path)}
   return (
     <FooterWrapper className="footer">
-      <Link onClick={handleClick('/')}>🏠</Link>
-      <Link onClick={handleClick('/post')}>☁️</Link>
-      <Link onClick={handleClick('/profile')}>😎</Link>
+      <Link href="/" onClick={handleClick('/')}>🏠</Link>
+      <Link href="/post" onClick={handleClick('/post')}>☁️</Link>
+      <Link href="/profile" onClick={handleClick('/profile')}>😎</Link>
     </FooterWrapper>
   );
 };

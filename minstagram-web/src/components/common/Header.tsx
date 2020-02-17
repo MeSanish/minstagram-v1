@@ -1,5 +1,9 @@
 import React from 'react';
+
 import styled from 'styled-components';
+
+import { handleLogout } from 'src/utils/auth';
+import { history } from '../Router';
 
 export const ShadowWrapper = styled.div`
   box-shadow: 1px 1px 10px rgba(0,0,0,0.2);
@@ -15,14 +19,29 @@ const HeaderWrapper = styled(ShadowWrapper)`
   top: 0;
   width: 100%;
   background: white;
-`
+`;
 
-const Header = () => {
+const Link = styled.a`
+  cursor: pointer;
+  font-size: 25px;
+  text-decoration: none;
+  color: black;
+`;
+
+const Header: React.SFC<{}> = () => {
+  const onLogout = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault();
+    handleLogout()
+  }
+  const onHome = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault();
+    history.push('/')
+  }
   return (
     <HeaderWrapper className="header">
-      <div className="logo">📷</div>
+      <Link href="/" className="logo" onClick={onHome}>📷</Link>
       <input className="search" placeholder="Want to stalk" />
-      <div className="logout">🚪</div>      
+      <Link href="/logout" className="logout" onClick={onLogout}>🚪</Link>      
     </HeaderWrapper>
   );
 };
