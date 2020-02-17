@@ -48,7 +48,7 @@ userRouter.post('/authorize', async (req, res, next) => {
   try {
     const userFound = await User.findOne({ email: req.body.email })
     if (userFound) {
-      const passwordHash = crypto.pbkdf2Sync(req.body.password, 'salt', 20, 256, 'sha256');
+      const passwordHash = crypto.pbkdf2Sync(req.body.password, 'salt', Number.parseInt(SALT_ROUNDS), 256, 'sha256');
 
       if (passwordHash.toString('hex') === userFound.password) {
         const { accessToken, expiresIn } = generateToken({ id: userFound._id })
@@ -120,6 +120,8 @@ userRouter.patch('/me', verification, async (req:  IVerifiedRequest, res, next) 
       }, { new: true })
       if(!userFound) {
         throw new Error("Don\'t exist bruh!!")
+      } else {
+        return res.json(userFound)
       }
     } else {
       throw new Error("No id bruh!!")
