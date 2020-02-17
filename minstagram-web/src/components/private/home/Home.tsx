@@ -6,7 +6,7 @@ import axiosInstance from 'src/utils/axios';
 
 const HomeWrapper = styled.div`
   display: grid;
-  grid-row-gap: 100px;
+  grid-row-gap: 20px;
 `
 
 const Home = () => {

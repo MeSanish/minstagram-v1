@@ -8,6 +8,9 @@ const PostCollageWrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 18px;
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;  
+  }
 `
 
 const ImageWrapper = styled.img`
@@ -19,14 +22,13 @@ const ImageWrapper = styled.img`
 
 const PostWrapper = styled.div`
   display: grid;
-  grid-template-rows: 2fr 1fr;
   justify-items: center;
 `
 
 const SinglePost: React.SFC<IPost> = ({ id, imageUrl, reactions }) => (
   <PostWrapper>
     <ImageWrapper src={imageUrl} />
-    <Reactions disabled emojiSize="40px" reaction={reactions} postId={id} onReactionChange={() => {}} />
+    <Reactions disabled emojiSize="25px" reaction={reactions} postId={id} onReactionChange={() => {}} />
   </PostWrapper>
 )
 

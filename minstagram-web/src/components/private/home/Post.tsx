@@ -13,7 +13,6 @@ export interface IPost {
 
 const PostWrapper = styled.div`
   display: grid;
-  grid-template-rows: 3fr 1fr 1fr;
   justify-items: center;
 `
 
@@ -29,13 +28,15 @@ interface IPostProps {
 const Post: React.SFC<IPostProps> = ({ post, onReactionChange }) => {
   return (
     <PostWrapper className="post">
-      <div className="image">
+      <div style={{ padding: '10px' }} className="image">
         <ImageWrapper src={post.imageUrl} />
       </div>
-      <div className="caption">
+      <div style={{ padding: '10px' }} className="caption">
         <span>{post.caption}</span>
       </div>
-      <Reactions onReactionChange={onReactionChange} postId={post.id} reaction={post.reactions} />
+      <div style={{ padding: '10px'}}>
+        <Reactions emojiSize="25px" onReactionChange={onReactionChange} postId={post.id} reaction={post.reactions} />
+      </div>
     </PostWrapper>
   );
 };

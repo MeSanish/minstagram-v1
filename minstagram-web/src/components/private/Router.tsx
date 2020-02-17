@@ -7,6 +7,7 @@ import CreatePost from './post/Post';
 import axiosInstance from 'src/utils/axios';
 import Profile from './profile/Profile';
 import { IPost } from './home/Post';
+import styled from 'styled-components';
 
 interface IProfile {
   id: string;
@@ -29,7 +30,7 @@ interface IPrivateRouterContext {
 
 export const PrivateRouterContext = createContext<IPrivateRouterContext>({
   profile: {} as IProfile,
-  fetchProfile: () => new Promise((resolve) => {resolve()})
+  fetchProfile: () => new Promise((resolve) => { resolve() })
 });
 
 const PrivateRouter: React.SFC<{}> = () => {
@@ -37,10 +38,10 @@ const PrivateRouter: React.SFC<{}> = () => {
 
   const fetchProfile = async () => {
     const profile: IProfile = await axiosInstance.get('/v1/users/me')
-    .then(({ data }) => data)
-    .catch((error) => {
-      throw error;
-    })
+      .then(({ data }) => data)
+      .catch((error) => {
+        throw error;
+      })
     setProfile(profile);
   }
 
@@ -48,13 +49,19 @@ const PrivateRouter: React.SFC<{}> = () => {
     fetchProfile();
   }, [])
 
+  const PrivateRoutesWrapper = styled.div`
+    margin: 65px 0;
+  `
+
   return (
     <PrivateRouterContext.Provider value={{ profile, fetchProfile }}>
       <Header />
       <Switch>
-        <Route exact path="/" component={Home} />
-        <Route exact path="/post" component={CreatePost} />
-        <Route exact path="/profile" component={Profile} />
+        <PrivateRoutesWrapper>
+          <Route exact path="/" component={Home} />
+          <Route exact path="/post" component={CreatePost} />
+          <Route exact path="/profile" component={Profile} />
+        </PrivateRoutesWrapper>
       </Switch>
       <Footer />
     </PrivateRouterContext.Provider>

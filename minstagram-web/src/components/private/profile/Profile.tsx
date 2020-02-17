@@ -10,6 +10,7 @@ const ProfileWrapper = styled.div`
   display: grid;
   grid-row-gap: 40px;
   justify-items: center;
+  padding-top: 20px;
 `
 
 const Profile = () => {

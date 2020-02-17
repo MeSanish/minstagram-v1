@@ -17,7 +17,7 @@ const ReactionWrapper = styled.div`
   grid-template-columns: repeat(3, 1fr);
   justify-items: center;
   grid-column-gap: 60px;
-
+  padding: 10px;
 `
 
 interface IReactionsProps {

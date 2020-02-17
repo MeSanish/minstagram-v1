@@ -53,7 +53,7 @@ const CreatePostForm: React.SFC<{}> = () => {
           {errors.caption && <ErrorSpan>{errors.caption.message}</ErrorSpan>}
         </InputWrapper>
       </div>
-      <div>
+      <div style={{ textAlign: 'center'}}>
         <button type="submit" >Bazinga!!!</button>
       </div>
     </FormWrapper>
