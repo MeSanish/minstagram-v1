@@ -32,7 +32,7 @@ const User: React.SFC<IUserProps> = (props) => {
   return (
     user ? (
       <ProfileWrapper>
-        <UserDetails email={user.email} profileUrl={user.profileUrl} />
+        <UserDetails disabled email={user.email} profileUrl={user.profileUrl} />
         <PostCollage posts={user.posts} />
       </ProfileWrapper>
     ): null

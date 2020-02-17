@@ -18,7 +18,7 @@ const Profile = () => {
   const { profile: { posts, email, profileUrl } } = useContext(PrivateRouterContext);
   return (
     <ProfileWrapper>
-      <UserDetails email={email} profileUrl={profileUrl} />
+      <UserDetails disabled={false} email={email} profileUrl={profileUrl} />
       <PostCollage posts={posts} />
     </ProfileWrapper>
   );
