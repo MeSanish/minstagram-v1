@@ -29,3 +29,19 @@ const parsePosts = (posts: Array<IPost>) => {
     reactions: createReactionMap(post.reactions)
   }))
 }
+
+
+interface IUserListItem {
+  id: string;
+  email: string;
+  profileUrl: string;
+}
+
+export const userListDTO = (user: IUser): IUserListItem => {
+  const { email, profile, _id: id } = user;
+  return {
+    id,
+    email,
+    profileUrl: `${config.resource.staticPath}/${profile.path}`,
+  }
+}
