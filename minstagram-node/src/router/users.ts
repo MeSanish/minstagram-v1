@@ -112,4 +112,21 @@ userRouter.get('/posts', verification, async (req: IVerifiedRequest, res, next) 
   }
 })
 
+userRouter.patch('/me', verification, async (req:  IVerifiedRequest, res, next) => {
+  try {
+    if(req.auth) {
+      const userFound = await User.findByIdAndUpdate(req.auth.userId, {
+        profile: req.body.profileId
+      }, { new: true })
+      if(!userFound) {
+        throw new Error("Don\'t exist bruh!!")
+      }
+    } else {
+      throw new Error("No id bruh!!")
+    }
+  } catch (error) {
+    next(error)
+  }
+})
+
 export default userRouter;
