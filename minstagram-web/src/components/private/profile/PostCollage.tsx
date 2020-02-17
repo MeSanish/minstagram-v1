@@ -1,7 +1,6 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { IPost } from '../home/Post';
-import { PrivateRouterContext } from '../Router';
 import Reactions from '../home/Reactions';
 
 const PostCollageWrapper = styled.div`
@@ -32,8 +31,7 @@ const SinglePost: React.SFC<IPost> = ({ id, imageUrl, reactions }) => (
   </PostWrapper>
 )
 
-const PostCollage: React.SFC<{}> = () => {
-  const { profile: { posts } } = useContext(PrivateRouterContext);
+const PostCollage: React.SFC<{ posts: Array<IPost>}> = ({ posts }) => {
   return (
     <PostCollageWrapper>
       {posts.map((post) => <SinglePost key={post.id} {...post} />)}

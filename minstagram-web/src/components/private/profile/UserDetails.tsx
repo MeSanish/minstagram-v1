@@ -15,8 +15,13 @@ const UserDetailsWrapper = styled.div`
   grid-template-columns: 1fr;
 `
 
-const UserDetails = () => {
-  const { profile: { email, profileUrl } } = useContext(PrivateRouterContext);
+interface IUserDetailsProps {
+  email: string;
+  profileUrl: string;
+  disabled?: boolean;
+}
+
+const UserDetails: React.SFC<IUserDetailsProps> = ({ email, profileUrl }) => {
   return (
     <UserDetailsWrapper>
       <ProfileImage src={profileUrl} />
