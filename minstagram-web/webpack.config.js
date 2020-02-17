@@ -13,7 +13,8 @@ module.exports = () => {
     },
     output: {
       filename: 'main.js',
-      path: path.resolve(__dirname, 'build')
+      path: path.resolve(__dirname, 'build/'),
+      publicPath: PUBLIC_PATH
     },
     devtool: 'eval-cheap-source-map',
     devServer: {
