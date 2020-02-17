@@ -2,7 +2,7 @@ import { Router } from 'express';
 import crypto from 'crypto';
 
 import User from '../models/user';
-import { profileDTO } from '../dto/users';
+import { profileDTO, userListDTO } from '../dto/users';
 import config from '../config';
 import { generateToken } from '../service/auth';
 import verification, { IVerifiedRequest } from '../middleware/verification';
@@ -13,8 +13,10 @@ const userRouter = Router();
 
 userRouter.get('/', verification, async (req, res, next) => {
   try {
-    const userList = await User.find().populate('profile');
-    const userListWithProfileDetails = userList.map(profileDTO);
+    const searchTerm = req.query.search;
+    const searchRegx = new RegExp(`${searchTerm}`, 'g');
+    const userList = await User.find({ email: searchRegx }, 'email profile').populate('profile')
+    const userListWithProfileDetails = userList.map(userListDTO);
     res.json(userListWithProfileDetails)
   } catch (error) {
     next(error)
@@ -69,8 +71,8 @@ userRouter.get('/me', verification, async (req: IVerifiedRequest, res, next) => 
   try {
     if (req.auth) {
       const userFound = await User.findById(req.auth.userId)
-      .populate('profile')
-      .populate({ path: 'posts', populate: { path: 'imageId', select: 'path -_id' } })
+        .populate('profile')
+        .populate({ path: 'posts', populate: { path: 'imageId', select: 'path -_id' } })
       if (userFound) {
         res.json(profileDTO(userFound))
       } else {
@@ -85,8 +87,8 @@ userRouter.get('/me', verification, async (req: IVerifiedRequest, res, next) => 
 userRouter.get('/:userId', verification, async (req, res, next) => {
   try {
     const userFound = await User.findById(req.params.userId)
-    .populate('profile')
-    .populate({ path: 'posts', populate: { path: 'imageId', select: 'path -_id' } })
+      .populate('profile')
+      .populate({ path: 'posts', populate: { path: 'imageId', select: 'path -_id' } })
     if (userFound) {
       res.json(profileDTO(userFound))
     } else {
