@@ -40,7 +40,7 @@ const UserDetails: React.SFC<IUserDetailsProps> = ({ email, profileUrl, disabled
       {profileUrl ? (
         <ProfileImage src={profileUrl} />
       ) : (
-          !disabled ? <Upload onUploadComplete={handleUploadComplete} /> : null
+          !disabled ? <Upload onUploadComplete={handleUploadComplete} maxHeight={100} maxWidth={100} /> : null
         )}
       <span>{email}</span>
     </UserDetailsWrapper>
