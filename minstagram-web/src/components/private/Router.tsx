@@ -8,8 +8,9 @@ import axiosInstance from 'src/utils/axios';
 import Profile from './profile/Profile';
 import { IPost } from './home/Post';
 import styled from 'styled-components';
+import User from './user/User';
 
-interface IProfile {
+export interface IProfile {
   id: string;
   email: string;
   profileUrl: string;
@@ -61,6 +62,7 @@ const PrivateRouter: React.SFC<{}> = () => {
           <Route exact path="/" component={Home} />
           <Route exact path="/post" component={CreatePost} />
           <Route exact path="/profile" component={Profile} />
+          <Route exact path="/users/:userId" component={User} />
         </PrivateRoutesWrapper>
       </Switch>
       <Footer />
