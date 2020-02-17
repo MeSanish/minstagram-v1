@@ -24,11 +24,13 @@ interface IUserDetailsProps {
 }
 
 const UserDetails: React.SFC<IUserDetailsProps> = ({ email, profileUrl, disabled = true }) => {
+  const { fetchProfile } = useContext(PrivateRouterContext);
   const handleUploadComplete = async (profileId: string) => {
     try {
       await axiosInstance.patch('/v1/users/me', {
         profileId
       })
+      await fetchProfile();
     } catch (error) {
       throw error;
     }
