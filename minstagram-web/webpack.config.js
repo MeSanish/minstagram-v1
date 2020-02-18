@@ -7,16 +7,16 @@ const PUBLIC_PATH = '/';
 
 module.exports = () => {
   return {
-    mode: 'development',
+    mode: process.env.NODE_ENV,
     entry: {
-      main: './src/main.tsx'
+      main: './src/main.tsx',
+      "service-worker": './src/serviceworker/service.js'
     },
     output: {
-      filename: 'main.js',
+      filename: '[name].js',
       path: path.resolve(__dirname, 'build/'),
       publicPath: PUBLIC_PATH
     },
-    devtool: 'eval-cheap-source-map',
     devServer: {
       contentBase: path.resolve(__dirname),
       publicPath: PUBLIC_PATH,
