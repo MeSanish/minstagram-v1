@@ -8,6 +8,9 @@ const renderApp = () => {
   if(rootDiv) {
     render(<App />, rootDiv);
   }
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('service-worker.js');
+  }
 }
 
 renderApp();
