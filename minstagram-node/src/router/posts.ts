@@ -10,7 +10,7 @@ const PostRouter = Router();
 
 PostRouter.get('/', async (req, res) => {
   try {
-    const postList = await Post.find()
+    const postList = await Post.find().sort('-createdAt')
     .populate('imageId')
     .populate({ path: 'author', select: 'email', populate: {
       path: 'profile'
