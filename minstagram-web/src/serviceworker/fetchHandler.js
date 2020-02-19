@@ -16,7 +16,7 @@ export const handleSameOriginRequests = async (event, PRECACHE) => {
 export const handleCrossOriginRequests = async (event, CORS) => {
   try {
     const crossOriginCachedResponse = await caches.match(event.request); // checks for cache for response
-    if (crossOriginCachedResponse && !navigator.onLine) {
+    if (crossOriginCachedResponse) {
       fetchAndUpdateCache(event.request, CORS);
       return crossOriginCachedResponse;
     } else {
@@ -29,13 +29,17 @@ export const handleCrossOriginRequests = async (event, CORS) => {
 
 const fetchAndUpdateCache = async (request, cacheName) => {
   try {
-    const actualResponse = await fetch(request); // performs the actual fetch to backend
-    if (cacheName && actualResponse.status === 200) {
-      const cacheInstance = await caches.open(cacheName);
-      await cacheInstance.put(request, actualResponse.clone()); // fills the cloned response to cache
-      return actualResponse;
+    if(navigator.onLine) {
+      const actualResponse = await fetch(request); // performs the actual fetch to backend
+      if (cacheName && actualResponse.status === 200) {
+        const cacheInstance = await caches.open(cacheName);
+        await cacheInstance.put(request, actualResponse.clone()); // fills the cloned response to cache
+        return actualResponse;
+      } else {
+        return actualResponse;
+      }
     } else {
-      return actualResponse;
+      return;
     }
   } catch (error) {
     throw error;
