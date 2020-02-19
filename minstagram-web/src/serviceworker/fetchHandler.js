@@ -31,7 +31,7 @@ const fetchAndUpdateCache = async (request, cacheName) => {
   try {
     if(navigator.onLine) {
       const actualResponse = await fetch(request); // performs the actual fetch to backend
-      if (cacheName && actualResponse.status === 200) {
+      if (cacheName && actualResponse.status <= 200) {
         const cacheInstance = await caches.open(cacheName);
         await cacheInstance.put(request, actualResponse.clone()); // fills the cloned response to cache
         return actualResponse;

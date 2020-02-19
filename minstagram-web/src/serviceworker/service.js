@@ -5,8 +5,7 @@ const CORS = 'cors-cache-v1';
 
 const PRECACHE_URLS = [
   'index.html',
-  'main.js',
-  '/assets/'
+  'main.js'
 ]
 
 /*
