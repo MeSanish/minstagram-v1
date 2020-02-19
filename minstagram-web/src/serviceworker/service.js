@@ -5,7 +5,7 @@ const CORS = 'cors-cache-v1';
 
 const PRECACHE_URLS = [
   'index.html',
-  'main.js'
+  'main.js',
 ]
 
 /*
@@ -44,7 +44,7 @@ self.addEventListener('activate', event => {
 */
 self.addEventListener('fetch', event => {
   if (event.request.url.startsWith(self.location.origin)) { // checks for same origin i.e http://localhost:8000 in this case
-    event.respondWith(handleSameOriginRequests(event))
+    event.respondWith(handleSameOriginRequests(event, PRECACHE))
   }
   else {
     if (event.request.method === 'GET') {
