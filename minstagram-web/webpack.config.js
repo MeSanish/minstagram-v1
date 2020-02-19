@@ -37,6 +37,18 @@ module.exports = () => {
             }
           ],
           exclude: /node_modules/
+        }, {
+          test: /public\/assets.*\.png?$/,
+          use: [
+            {
+              loader: 'file-loader',
+              options: {
+                name: '[name].[ext]',
+                publicPath: '/public/assets/',
+                outputPath: 'public/assets/'
+              }
+            }
+          ]
         }
       ]
     },
