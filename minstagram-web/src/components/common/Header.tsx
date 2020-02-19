@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { handleLogout } from 'src/utils/auth';
 import { history } from '../Router';
 import Stalk from './Stalk';
+import icon from 'public/assets/favs/favicon-32x32.png';
 
 export const ShadowWrapper = styled.div`
   box-shadow: 1px 1px 10px rgba(0,0,0,0.2);
@@ -40,7 +41,7 @@ const Header: React.SFC<{}> = () => {
   }
   return (
     <HeaderWrapper className="header">
-      <Link href="/" className="logo" onClick={onHome}>📷</Link>
+      <Link href="/" className="logo" onClick={onHome}><img src={icon} /></Link>
       <Stalk />
       <Link href="/logout" className="logout" onClick={onLogout}>🚪</Link>      
     </HeaderWrapper>

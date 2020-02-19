@@ -26,7 +26,7 @@ const Footer: React.SFC<{}> = () => {
   return (
     <FooterWrapper className="footer">
       <Link href="/" onClick={handleClick('/')}>🏠</Link>
-      <Link href="/post" onClick={handleClick('/post')}>☁️</Link>
+      <Link href="/post" onClick={handleClick('/post')}>📷</Link>
       <Link href="/profile" onClick={handleClick('/profile')}>😎</Link>
     </FooterWrapper>
   );
