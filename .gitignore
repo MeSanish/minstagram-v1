@@ -8,3 +8,5 @@ post-uploads
 .env
 
 yarn-error.log
+
+build
